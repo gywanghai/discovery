@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>discovery-starter</artifactId>
+        <groupId>com.ocean.discovery</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <artifactId>discovery-service-boot-starter</artifactId>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.ocean.discovery</groupId>
+            <artifactId>discovery-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ocean.discovery</groupId>
+            <artifactId>discovery-plugin-openfeign-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ocean.discovery</groupId>
+            <artifactId>discovery-plugin-ribbon-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ocean.discovery</groupId>
+            <artifactId>discovery-plugin-spring-webmvc-starter</artifactId>
+        </dependency>
+
+    </dependencies>
+</project>

@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: discovery-service-provider
+
+discovery-service-provider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.ocean.discovery.plugin.ribbon.DiscoveryRoundRibbonRule
+
+discovery-service-consumer:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.ocean.discovery.plugin.ribbon.DiscoveryRoundRibbonRule
+
+discovery:
+  metadata:
+    group: discovery-group
+    version: 1.0
+  datasource:
+    nacos:
+      server-addr: localhost:8848
+      data-id: discovery-route-rules
+      namespace: discovery-group
+      # 此 group 是 nacos 配置中心的概念，与服务分组无关
+      group: discovery-group

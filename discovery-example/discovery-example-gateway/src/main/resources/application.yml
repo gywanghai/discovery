@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: discovery-example-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: discovery-service-consumer
+          uri: lb://discovery-service-consumer
+          predicates:
+            - Path=/consumer/**
+        - id: discovery-service-provider
+          uri: lb://discovery-service-provider
+          predicates:
+            - Path=/provider/**
+
+server:
+  port: 8082
+
+discovery-service-provider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.ocean.discovery.plugin.ribbon.DiscoveryRoundRibbonRule
+
+discovery-service-consumer:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.ocean.discovery.plugin.ribbon.DiscoveryRoundRibbonRule
+
+discovery:
+  metadata:
+    group: discovery-group
+    version: 1.0
+  datasource:
+    nacos:
+      server-addr: localhost:8848
+      data-id: discovery-route-rules
+      namespace: discovery-group
+      group: discovery-group
