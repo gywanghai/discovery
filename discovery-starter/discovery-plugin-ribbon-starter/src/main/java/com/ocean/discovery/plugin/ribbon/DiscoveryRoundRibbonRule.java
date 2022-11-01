@@ -47,18 +47,15 @@ public class DiscoveryRoundRibbonRule extends AbstractLoadBalancerRule {
         }
         RouteRequest routeRequest = DiscoveryContext.getRouteRequest();
         List<Server> reachableServers = lb.getReachableServers();
+
         String serviceName = lb.getName();
+
         // 如果需要对服务器进行标签分组过滤
         if(routeRequest != null){
-            log.info("本次负载均衡需要进行标签过滤");
             reachableServers = filter(serviceName, routeRequest, reachableServers);
-        }
-        else {
-            log.info("本次负载均衡不需要进行标签过滤");
         }
 
         int upCount = reachableServers.size();
-
         if ((upCount == 0)) {
             log.warn("No up servers available from load balancer: " + lb);
             return null;
@@ -106,11 +103,12 @@ public class DiscoveryRoundRibbonRule extends AbstractLoadBalancerRule {
                 return StringUtils.equals(serviceTag.getGroup(),routeResult.getGroup())
                         && StringUtils.equals(serviceTag.getVersion(), routeResult.getVersion());
             }).collect(Collectors.toList());
-            if(list == null || list.isEmpty()){
-                log.warn("未找到标签为 [group: {}, version: {}] 的[{}]服务实例，取消按标签进行路由",
-                        routeRequest.getGroup(), routeResult.getVersion() ,serviceName);
-                return servers;
+            if(list.size() > 0){
+                return list;
             }
+            log.warn("未找到标签为 [group: {}, version: {}] 的[{}]服务实例，取消按标签进行路由",
+                    routeRequest.getGroup(), routeResult.getVersion() ,serviceName);
+            return servers;
         }
         return servers;
     }
