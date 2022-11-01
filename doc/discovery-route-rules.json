@@ -1,0 +1,60 @@
+{
+  "conditions": [
+    {
+      "id": "condition1",
+      "expression": "a != nil && a[0] == '1'",
+      "routeWeights": [
+        {
+          "strategyId": "grayRoute",
+          "weight": 90
+        },
+        {
+          "strategyId": "stableRoute",
+          "weight": 10
+        }
+      ]
+    },
+    {
+      "id": "condition2",
+      "expression": "",
+      "routeWeights": [
+        {
+          "strategyId": "grayRoute",
+          "weight": 0
+        },
+        {
+          "strategyId": "stableRoute",
+          "weight": 100
+        }
+      ]
+    }
+  ],
+  "strategies": [
+    {
+      "id": "grayRoute",
+      "rules": [
+        {
+          "serviceName": "discovery-service-consumer",
+          "version": "1.0"
+        },
+        {
+          "serviceName": "discovery-service-provider",
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "id": "stableRoute",
+      "rules": [
+        {
+          "serviceName": "discovery-service-consumer",
+          "version": "1.1"
+        },
+        {
+          "serviceName": "discovery-service-provider",
+          "version": "1.1"
+        }
+      ]
+    }
+  ]
+}

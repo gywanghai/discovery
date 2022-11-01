@@ -2,8 +2,10 @@ package com.ocean.discovery.example.provider;
 
 import com.ocean.discovery.core.constants.DiscoveryConstants;
 import com.ocean.discovery.core.context.DiscoveryContext;
+import com.ocean.discovery.spring.DiscoveryProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.commons.httpclient.ApacheHttpClientFactory;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +20,16 @@ public class ProviderController {
 
     private static final Logger log = LoggerFactory.getLogger(ProviderController.class);
 
+    @Autowired
+    private DiscoveryProperties discoveryProperties;
+
     @RequestMapping(value = "hello")
     public String hello(@RequestHeader(value = "a", required = false) String a,
                         @RequestHeader(value = DiscoveryConstants.HEADER_GROUP, required = false) String group,
                         @RequestHeader(value = DiscoveryConstants.HEADER_STRATEGYID, required = false) String strategyId){
         log.info("routeRequest: {}", DiscoveryContext.getRouteRequest());
-        return "a=" + a + ", group = " + group + ", strategyId = " + strategyId;
+        return "a=" + a + ", group = " + group + ", strategyId = " + strategyId + ", discovery.metadata.version = "
+                + discoveryProperties.getMetadata().getVersion();
     }
 
 }
